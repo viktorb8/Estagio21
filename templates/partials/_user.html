@@ -1,0 +1,43 @@
+{% load static %}
+
+<style>
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+
+</style>
+
+<div class="d-flex align-items-center">
+  <div class="p-1">
+      <a role="button" type="submit" href="{% url 'cadastrar_projeto' %}" class="text-white btn btn-green btn-large">Cadastrar Projeto</a>
+  </div>
+
+  <div class="p-1">
+      <a role="button" type="submit" href="{% url 'lista_professores' %}" class="btn btn-green btn-large text-white">Lista de Professores</a>
+  </div>
+
+    {% if user.is_superuser %}
+  <div class="p-1">
+      <a role="button" type="submit" href="{% url 'cadastro' %}" class="btn btn-green btn-large text-white">Cadastrar Usuários</a>
+  </div>
+    {% else %}
+    <div class="p-1">
+      <a role="button" type="submit" href="{% url 'lista' %}" class="btn btn-green btn-large text-white">Lista de Usuários</a>
+  </div>
+    {% endif %}
+
+  <div class="p-1">
+      <a role="button" type="submit" href="{% url 'relatorio_bolsas' %}" class="btn btn-green btn-large text-white">Relatório de Bolsas</a>
+  </div>
+
+
+</div>

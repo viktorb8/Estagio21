@@ -1,0 +1,73 @@
+{% load static %}
+
+<style>
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+</style>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<div class="row">
+    <div class="col">
+        <h5 class="card-header text-center">Filtros</h5>
+        <div class="card card-body">
+            <form action="{% url 'relatorio_bolsas' %}">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <input type="text" class="form-control col-4" placeholder="Financiador" name="financiador">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary fas fa-search" type="submit"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Início</label>
+                        </div>
+                        <input class="form-control col-4" type="date" name="inicio">
+
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Término</label>
+                        </div>
+                        <input class="form-control col-4" type="date" name="termino">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary fas fa-search" type="submit"></button>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </form>
+
+            <form action="{% url 'relatorio_bolsas' %}" target="_blank">
+                <br>
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <input hidden type="text" class="form-control col-4" value="pdf" name="pdf">
+                        <input hidden type="text" class="form-control col-4" value="{{v_financiador}}" name="financiador">
+                        <input hidden type="text" class="form-control col-4" value="{{v_portaria}}" name="portaria">
+                        <input hidden type="text" class="form-control col-4" value="{{v_inicio}}" name="inicio">
+                        <input hidden type="text" class="form-control col-4" value="{{v_termino}}" name="termino">
+                        <div class="input-group-append">
+                            <button class="btn btn-green" type="submit"> PDF </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>

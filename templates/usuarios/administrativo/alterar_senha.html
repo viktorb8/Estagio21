@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+{% include 'partials/_adm.html' %}
+
+<form method="post">
+    <div class="container center_div">
+
+        <div class="col-12 col-lg-6">
+            <label for="id_old_password">Senha antiga:</label>
+            <input type="password" class="form-control" name="old_password" autocomplete="current-password" autofocus required id="id_old_password">
+        </div>
+
+        {% for error in form.old_password.errors %}
+        <section class="alert alert-danger col-12 col-lg-6 " role="alert">
+            {{ form.old_password.errors }}
+        </section>
+        {% endfor %}
+
+        <div class="col-12 col-lg-6">
+            <label for="id_new_password1">Nova senha:</label>
+            <input type="password" class="form-control" name="new_password1" autocomplete="new-password" required id="id_new_password1">
+            <br>
+            <span class="helptext">
+                <ul>
+                    <li>Sua senha não pode ser muito parecida com o resto das suas informações pessoais.</li>
+                    <li>Sua senha precisa conter pelo menos 8 caracteres.</li>
+                    <li>Sua senha não pode ser uma senha comumente utilizada.</li>
+                    <li>Sua senha não pode ser inteiramente numérica.</li>
+                </ul>
+            </span>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <label for="id_new_password2">Confirmação da nova senha:</label>
+            <input type="password" class="form-control" name="new_password2" autocomplete="new-password" required id="id_new_password2">
+        </div>
+
+        {% for error in form.new_password2.errors %}
+        <section class="alert alert-danger col-12 col-lg-6 " role="alert">
+            {{ form.new_password2.errors }}
+        </section>
+        {% endfor %}
+
+        <div class="d-flex p-2 bd-highlight">
+            <div class="col-12 text-center">
+                <button class="btn btn-green" type="submit">Salvar</button>
+                {% csrf_token %}
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

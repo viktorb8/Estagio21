@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-large {
+    padding: 5px 15px;
+    font-size: 15px;
+}
+
+table {
+  /* Set "my-sec-counter" to 0 */
+  counter-reset: my-sec-counter;
+}
+
+p::before {
+  /* Increment "my-sec-counter" by 1 */
+  counter-increment: my-sec-counter;
+  content: counter(my-sec-counter) ". ";
+  font-size:18px;
+}
+
+</style>
+
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+  <div class="container mt-4">
+
+{%if user.is_authenticated %}
+{% include 'partials/_user.html' %}
+{% endif %}
+
+  </div>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 40%" scope="col">Nome</th>
+            <th style="width: 35%" scope="col">Email</th>
+            {% if user.is_superuser %}
+            <th colspan="2" scope="colgroup" class="text-center">Ações</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+         {% if usuarios %}
+            {% for item in usuarios %}
+          <tr>
+            <th scope="row"><p></p></th>
+            <td>{{ item.first_name.capitalize.title }} {{item.last_name.capitalize}}</td>
+            <td>{{ item.email }}</td>
+            {% if user.is_superuser %}
+            <td class="text-center" rowspan="1"><a role="button" class="btn btn-green text-white" href="{% url 'editar' item.username %}">Editar</a></button></td>
+            <td class="text-center" rowspan="1"><a role="button" class=" btn btn-danger text-white" href="{% url 'deletar_usuario' item.id %}">Excluir</a></button></td>
+            {% endif %}
+          </tr>
+            {% endfor %}
+        {% else %}
+          <h1>Ainda não há Usuários cadastrados</h1>
+        {% endif %}
+
+        </tbody>
+      </table>
+
+      {% include 'partials/_pagination_profs.html' %}
+
+    </div>
+  </div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

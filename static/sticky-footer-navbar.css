@@ -1,0 +1,27 @@
+main > .container {
+  padding: 60px 15px 0;
+}
+
+.navbar{
+    background-color: #060;
+}
+
+.footer {
+  background-color: #060;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.my-own-color {
+  color: #006600 !important; // Define your own color in your CSS
+}
+.own-color:hover, .text-my-own-color:active {
+  color: #009900 !important; // Define your own color's darkening/lightening in your CSS
+}
+
+code {
+  font-size: 80%;
+}

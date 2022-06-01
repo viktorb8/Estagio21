@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+textarea {
+  height: 100px;
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- Begin page content -->
+{% if alert_flag %}
+<script>alert("Cadastrar bolsistas!")</script>
+{% endif %}
+<main role="main">
+
+	<div class="container mt-4">
+
+        <div class="d-flex bd-highlight mb-3">
+
+        <div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-green text-white" href="{% url 'bolsas' id %}">Bolsas</a>
+        </div>
+		<div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-danger text-white" href="/projeto/{{bolsa_criada}}/{{id}}/deletar_bolsa">Excluir</a>
+        </div>
+
+        </div>
+
+
+		<form enctype="multipart/form-data" action="" class="form-group" method="POST">{% csrf_token %}
+
+			<div style="display: none;">
+				{{form.as_p}}
+			</div>
+
+			<div class="form-group">
+					{{ form_bolsa.management_form }}
+					{% for bolsa in form_bolsa %}
+						{{ bolsa.non_field_errors }}
+						 {% for hidden in bolsa.hidden_fields %}
+							{{ hidden }}
+						{% endfor %}
+
+						{% if bolsa.orgao_remunerador.value == bolsa_criada.orgao_remunerador %}
+
+						{{bolsa.orgao_remunerador.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.orgao_remunerador}}
+						</div>
+						{% if bolsa.orgao_remunerador.errors %}
+							<section class="alert alert-danger col-6" role="alert">
+								{{bolsa.orgao_remunerador.errors}}
+							</section>
+						{% endif %}
+
+						{{bolsa.tipo_bolsa.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.tipo_bolsa}}
+						</div>
+
+						{{bolsa.portaria_bolsa.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.portaria_bolsa}}
+						</div>
+
+						{{bolsa.data_de_inicio.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.data_de_inicio}}
+						</div>
+						{% if bolsa.data_de_inicio.errors %}
+							<section class="alert alert-danger col-6" role="alert">
+								{{bolsa.data_de_inicio.errors}}
+							</section>
+						{% endif %}
+
+						{{bolsa.data_de_fim.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.data_de_fim}}
+						</div>
+						{% if bolsa.data_de_fim.errors %}
+							<section class="alert alert-danger col-6" role="alert">
+								{{bolsa.data_de_fim.errors}}
+							</section>
+						{% endif %}
+
+						{% else %}
+							<div style="display: none;">
+								{{bolsa.as_p}}
+							</div>
+						{% endif %}
+
+					{% endfor %}
+			</div>
+
+			<hr class="col-xs-12">
+			{{ form_bolsista.management_form }}
+			{% for bolsista in form_bolsista %}
+
+				{{ bolsista.non_field_errors }}
+				 {% for hidden in bolsista.hidden_fields %}
+					{{ hidden }}
+				{% endfor %}
+				<div class="container inline-form bolsista">
+					<label>Bolsista:</label>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-sm">Nome: </span>
+						</div>
+						{{bolsista.bolsista}}
+						<div class="input-group-append col-4">
+							{% if bolsista.bolsista.value is None %}
+							<a href="javascript:void(0)" class="text-white button btn-danger btn-lg fas fa-minus-square"></a>
+							{% elif bolsista.bolsista.value == "" %}
+							<a href="javascript:void(0)" class="text-white button btn-danger btn-lg fas fa-minus-square"></a>
+							{% elif bolsista.id.value == "" %}
+							<a type="button" href="/projeto/{{bolsa_criada}}/0/{{id}}/deletar_bolsista" class="text-white button btn-danger btn-lg fas fa-window-close"></a>
+							{% else %}
+							<a type="button" href="/projeto/{{bolsa_criada}}/{{bolsista.id.value}}/{{id}}/deletar_bolsista" class="text-white button btn-danger btn-lg fas fa-window-close"></a>
+							{% endif %}
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Email: </span>
+						</div>
+						{{bolsista.email}}
+					</div>
+						{% if bolsista.email.errors %}
+							<section class="alert alert-danger col-6" role="alert">
+								{{bolsista.email.errors}}
+							</section>
+						{% endif %}
+				</div>
+				{% endfor %}
+
+			<br>
+			<div class="submit-row">
+				<button type="submit" class="btn btn-green" name="_save">Salvar</button>
+			</div>
+
+		</form>
+	</div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% block scripts %}
+		<script type="text/javascript">
+
+			$(function() {
+				$('.bolsista').formset({
+					prefix: '{{ form_bolsista.prefix }}',
+					addCssClass: 'text-white button btn-lg btn-green',
+					deleteCssClass: 'text-white button btn-danger btn-lg fas fa-minus-square',
+					addText: '+ Bolsista',
+					deleteText: '',
+				});
+			})
+
+		</script>
+{% endblock scripts %}
+
+
+{% endblock %}
+

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+textarea {
+  height: 100px;
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- Begin page content -->
+
+<main role="main">
+	<div class="container mt-4">
+
+	<div class="d-flex bd-highlight mb-3">
+
+        <div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-green text-white" href="{% url 'projeto' id %}">Projeto</a>
+        </div>
+
+    </div>
+
+	<div class="table-responsive">
+      <table class="table">
+    <tbody>
+
+  	<tr class="d-flex flex-column mb-2">
+        <th scope="row">Bolsas:  <a role="button" class="btn btn-green text-white" href="{% url 'cadastrar_bolsa' projeto.id %}">Cadastrar</a>
+
+        </th>
+        {% if projeto.bolsas.all %}
+        <td>
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 80%" scope="col">Bolsa</th>
+                <th colspan="2" scope="colgroup" class="text-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for bolsa in projeto.bolsas.all %}
+              <tr>
+                <td>{{bolsa.orgao_remunerador}}</td>
+			  	<td class="text-center" rowspan="1"><a type="button" class="btn btn-green text-white" href="/projeto/{{bolsa.id}}/{{id}}/cadastrar_bolsista">Bolsistas</a></td>
+                <td class="text-center" rowspan="1"><a type="button" class="btn btn-danger text-white" href="/projeto/{{bolsa.id}}/{{id}}/deletar_bolsa">Excluir</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </td>
+        {% else %}
+        <td>Não há bolsas cadastradas!</td>
+        {% endif %}
+      </tr>
+
+    </tbody>
+
+  </table>
+    </div>
+
+    </div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}
+

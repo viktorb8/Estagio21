@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+{% include 'partials/_adm.html' %}
+
+<div class="container">
+    {{ form }}
+</div>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<style>
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+.btn-xl {
+    width: 20%;
+}
+
+</style>
+
+<main role="main">
+    <div class="container">
+<!-- ##### Contact Form Area Start ##### -->
+        <div class="contact-area section-padding-0-80">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading">
+                            <h2>Recuperação de senha completa!</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-form-area">
+                            <p>Sua senha foi alterada. Você pode efetuar o login agora</p>
+                            <a href="{% url 'login' %}" class="btn btn-green">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+function exibirCriarConta()
+{
+     location.href = "{% url 'cadastro' %}";
+}
+</script>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

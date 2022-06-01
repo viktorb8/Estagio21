@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+</style>
+
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+  <div class="container mt-4">
+
+{%if user.is_authenticated %}
+{% include 'partials/_user.html' %}
+{% else %}
+{% include 'partials/_filter.html' %}
+{% endif %}
+
+  </div>
+
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 50%" scope="col">Projeto</th>
+            <th style="width: 10%" scope="col">Portaria</th>
+            <th style="width: 40%" scope="col">Coordenador</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {% if projetos %}
+            {% for projeto in projetos %}
+            <tr>
+              <td><a href="{% url 'projeto' projeto.id %}">{{ projeto.nome_projeto }}</a></td>
+              <td>{{ projeto.portaria_projeto }}</td>
+              <td>{{ projeto.coordenador_projeto }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <th scope="row"></th>
+                <td>Projeto não encontrado!</td>
+            </tr>
+        {% endif %}
+
+        </tbody>
+      </table>
+
+    {% include 'partials/_pagination_proj.html' %}
+
+    </div>
+  </div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

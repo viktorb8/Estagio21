@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+</style>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- Begin page content -->
+
+<main role="main">
+    <div class="container mt-4">
+        <form action="" class="form-group" method="POST">{% csrf_token %}
+
+            <div class="form-group">
+                {{form.first_name.label_tag}}
+                {{form.first_name}}
+            </div>
+
+            <div class="form-group">
+                {{form.last_name.label_tag}}
+                {{form.last_name}}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            {% for error in form.email.errors %}
+            <section class="alert alert-danger col-12 col-lg-12 " role="alert">
+                {{ form.email.errors }}
+            </section>
+            {% endfor %}
+
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="username" value="{{form.username}}" maxlength="254" id="id_username">
+            </div>
+
+
+            <br>
+            <div class="submit-row">
+                <button type="submit" class="btn btn-green" name="_save">Salvar</button>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

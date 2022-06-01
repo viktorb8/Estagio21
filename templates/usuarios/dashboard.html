@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+  <div class="container">
+    <h1 class="mt-5">Projetos UNEMAT</h1>
+      <h3>Todos os projetos de extensão da UNEMAT serão publicados aqui!</h3>
+      <h3>Clique em projetos para ver todos ou pesquise algum projeto especifico</h3>
+  </div>
+</main>
+
+<div class="contact-area section-padding-0-80">
+   <div class="container">
+       <div class="row">
+           <div class="col-12">
+               <div class="section-heading">
+                   <br>
+                   <h3>Olá {{ user.first_name.capitalize }}!</h3>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+<br><br>
+{% if projetos %}
+    <div class="container">
+    <h3>Os seguintes projetos estão para vencer em 90 dias!</h3>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 30%" scope="col">Projeto</th>
+                    <th style="width: 40%" scope="col">Coordenador</th>
+                    <th class="font-weight-bold text-danger" style="width: 30%" scope="col">Data de Termino</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for projeto in projetos %}
+                <tr>
+                    <td><a href="{% url 'projeto' projeto.id %}">{{ projeto.nome_projeto }}</a></td>
+                    <td>{{ projeto.coordenador_projeto }}</td>
+                    <td class="font-weight-bold text-danger">{{ projeto.data_de_fim }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+    {% endif %}
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+textarea {
+  height: 100px;
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- Begin page content -->
+
+<main role="main">
+
+	<div class="container mt-4">
+
+        <div class="d-flex bd-highlight mb-3">
+
+        <div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-green text-white" href="{% url 'bolsas' id %}">Bolsas</a>
+        </div>
+
+        </div>
+
+
+		<form enctype="multipart/form-data" action="" class="form-group" method="POST">{% csrf_token %}
+
+			<div style="display: none;">
+				{{form.as_p}}
+			</div>
+
+			<hr class="col-xs-12">
+				<div class="form-group">
+					<label>Projeto:</label>
+					<input class="form-control col-8" value="{{form.nome_projeto.value}}" readonly>
+				</div>
+				<div class="form-group">
+					<label>Data de Inicio:</label>
+					<input class="form-control col-8" value="{{form.data_de_inicio.value}}" readonly>
+				</div>
+				<div class="form-group">
+					<label>Data de Término:</label>
+					<input class="form-control col-8" value="{{form.data_de_fim.value}}" readonly>
+				</div>
+			<hr class="col-xs-12">
+
+
+			<div class="form-group">
+				{{ form_bolsa.management_form }}
+					{% for bolsa in form_bolsa %}
+						{{ bolsa.non_field_errors }}
+						 {% for hidden in bolsa.hidden_fields %}
+							{{ hidden }}
+						{% endfor %}
+
+						<div style="display: none;">
+							{{bolsa.as_p}}
+						</div>
+						{% if forloop.last %}
+
+						{{bolsa.orgao_remunerador.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.orgao_remunerador}}
+						</div>
+						{% if bolsa.orgao_remunerador.errors %}
+							<section class="alert alert-danger col-6" role="alert">
+								{{bolsa.orgao_remunerador.errors}}
+							</section>
+						{% endif %}
+
+						{{bolsa.tipo_bolsa.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.tipo_bolsa}}
+						</div>
+
+						{{bolsa.portaria_bolsa.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.portaria_bolsa}}
+						</div>
+
+						{{bolsa.data_de_inicio.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.data_de_inicio}}
+						</div>
+						{% if bolsa.data_de_inicio.errors %}
+							<section class="alert alert-danger col-6" role="alert">
+								{{bolsa.data_de_inicio.errors}}
+							</section>
+						{% endif %}
+
+						{{bolsa.data_de_fim.label_tag}}
+						<div class="input-group mb-3">
+							{{bolsa.data_de_fim}}
+						</div>
+						{% if bolsa.data_de_fim.errors %}
+							<section class="alert alert-danger col-6" role="alert">
+								{{bolsa.data_de_fim.errors}}
+							</section>
+						{% endif %}
+
+						{% endif %}
+
+					{% endfor %}
+		    </div>
+
+			<br>
+			<div class="submit-row">
+				<button type="submit" class="btn btn-green" name="_save">Criar</button>
+			</div>
+
+		</form>
+	</div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}
+

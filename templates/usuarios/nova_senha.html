@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<style>
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+.btn-xl {
+    width: 20%;
+}
+
+</style>
+
+<main role="main">
+    <div class="container">
+<!-- ##### Contact Form Area Start ##### -->
+        <div class="contact-area section-padding-0-80">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading">
+                            <h2>Login</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-form-area">
+                            <form method="POST">
+                                <div class="row">
+
+                                    <div class="col-12 col-lg-12">
+                                        <label for="id_new_password1"><b>Nova senha:</b></label>
+                                        <input type="password" class="form-control" name="new_password1" autocomplete="new-password" required="" id="id_new_password1">
+                                    </div>
+                                        <div class="col-12 col-lg-12">
+                                            <label for="id_new_password2"><b>Confirme a senha:</b></label>
+                                            <input type="password" class="form-control" name="new_password2" autocomplete="new-password" required="" id="id_new_password2">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex p-2 bd-highlight">
+                                    <div class="col-12 text-center">
+                                        <button class="btn btn-green btn-xl" type="submit">Resetar senha</button>
+                                        {% csrf_token %}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+function exibirCriarConta()
+{
+     location.href = "{% url 'cadastro' %}";
+}
+</script>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

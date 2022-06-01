@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-large {
+    padding: 5px 15px;
+    font-size: 15px;
+}
+
+table {
+  /* Set "my-sec-counter" to 0 */
+  counter-reset: my-sec-counter;
+}
+
+p::before {
+  /* Increment "my-sec-counter" by 1 */
+  counter-increment: my-sec-counter;
+  content: counter(my-sec-counter) ". ";
+  font-size:18px;
+}
+
+</style>
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+<div class="container mt-4">
+
+{%if user.is_authenticated %}
+{% include 'partials/_lista.html' %}
+{% endif %}
+
+
+    <br><br>
+    <h2>O professor {{ prof.nome_professor }} tem os seguintes projetos cadastrados.</h2>
+    <h2>Antes de excluir, altere o coordenador dos projetos a seguir ou delete-os!</h2>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            {%if user.is_authenticated %}
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 40%" scope="col">Projeto</th>
+            <th style="width: 10%" scope="col">Portaria</th>
+            <th style="width: 25%" scope="col">Coordenador</th>
+            <th colspan="2" scope="colgroup" class="text-center">Ações</th>
+            {% else %}
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 45%" scope="col">Projeto</th>
+            <th style="width: 10%" scope="col">Portaria</th>
+            <th style="width: 40%" scope="col">Coordenador</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in projetos %}
+          <tr>
+            <th scope="row"><p></p></th>
+            <td><a href="{% url 'projeto' item.id %}">{{ item.nome_projeto }}</a></td>
+            <td>{{ item.portaria_projeto }}</td>
+            <td>{{ item.coordenador_projeto }}</td>
+            <td class="text-center" rowspan="1"><a role="button" class="btn btn-green text-white" href="{% url 'editar_projeto' item.id %}" target="_blank">Editar</a></td>
+            <td class="text-center" rowspan="1"><a role="button" class="btn btn-danger text-white" href="{% url 'excluir' item.id %}">Excluir</a></td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+
+  </div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

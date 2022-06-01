@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Projetos UNEMAT</title>
+    <link rel="icon" href="{% static 'assets/img/unemat.png' %}">
+    <style>
+        table, th,td{
+        padding:6px;
+        border: 1px solid black;
+        }
+        th{
+        background-color:#060;
+        color:white;
+        }
+
+        .text-justify {
+            text-align: justify !important;
+        }
+
+        @page{
+         size:a4 portrait;
+             @frame header_frame {
+                   -pdf-frame-content:header_content;
+                   left:60pt;
+                   width:512pt;
+                   top:60pt;
+                   height:50pt
+             }
+             @frame footer_frame {
+                   -pdf-frame-content:footer_content;
+                   left:60pt;
+                   width:512pt;
+                   top:772pt;
+                   height:30pt
+             }
+             @frame content_frame {
+                left:50pt;
+                width:512pt;
+                top:90pt;
+                height:620pt;
+             }
+
+        }
+    </style>
+</head>
+<body>
+<div id="header_content">
+   <h1> Sistema de Projetos - UNEMAT </h1>
+</div>
+<table class="table table-bordered">
+
+
+
+    <tbody>
+
+      <tr class="d-flex flex-column">
+        <th style="width: 25%">Nome do Projeto:</th>
+        <td>{{projeto.nome_projeto}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Portaria do projeto:</th>
+        <td>{{projeto.portaria_projeto}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Data de Inicio:</th>
+        <td>{{projeto.data_de_inicio}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Data de Término:</th>
+        <td>{{projeto.data_de_fim}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Objetivo<br>do<br>Projeto:</th>
+        <td class="text-justify">{{projeto.objetivo_projeto}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Área do Projeto:</th>
+        <td>{{projeto.area_projeto}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Coordenador do Projeto:</th>
+        <td>{{projeto.coordenador_projeto}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">E-mail do Coordenador:</th>
+        <td>{{projeto.coordenador_projeto.email}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Url do Projeto:</th>
+        <td>{{projeto.url_projeto}}</td>
+      </tr>
+      <tr class="d-flex flex-column">
+        <th scope="row">Tipos de Ações:</th>
+        <td>{{projeto.tipos_de_acoes}}</td>
+      </tr>
+
+
+{% if not projeto.colaboradores.all %}
+    <tr>
+      <th scope="row">Colaboradores do projeto:</th>
+      <td>Não há colaboradores cadastrados!</td>
+    </tr>
+{% endif %}
+
+{% for colab in projeto.colaboradores.all %}
+  {% if forloop.first %}
+      {% for colab in projeto.colaboradores.all %}
+          {% if forloop.last %}
+            <tr>
+                <th rowspan={{forloop.counter}}>Colaboradores<br>do<br>Projeto:</th>
+          {% endif %}
+      {% endfor %}
+      <td>{{ colab }}</td></tr>
+      {% else %}
+      <tr><td>{{ colab }}</td></tr>
+  {% endif %}
+{% endfor %}
+
+
+
+
+
+        </tbody>
+</table>
+
+
+
+<div id="footer_content">
+    <h3 class="text-black">Câmpus Universitário Dep. Est. Renê Barbour - Barra do Bugres</h3>
+</div>
+</body>
+</html>

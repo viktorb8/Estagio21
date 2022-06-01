@@ -1,0 +1,42 @@
+{% load static %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% if projetos.has_other_pages %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+        {% if projetos.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ projetos.previous_page_number }}">
+                    <i class="fas fa-backward"></i>
+                </a>
+            </li>
+        {% else %}
+            <li class="disabled">
+                <i class="fas fa-backward"></i>
+            </li>
+        {% endif %}
+
+        {% for i in projetos.paginator.page_range %}
+            {% if users.number == i %}
+            <li class="page-item active">
+                <span>{{ i }}<span class="sr-only">(current)</span></span>
+            </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if projetos.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ projetos.next_page_number }}">
+                    <i class="fas fa-forward"></i>
+                </a>
+            </li>
+        {% else %}
+            <li class="disabled">
+                <i class="fas fa-forward"></i>
+            </li>
+        {% endif %}
+        </ul>
+    </nav>
+{% endif %}

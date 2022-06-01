@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-large {
+    padding: 5px 15px;
+    font-size: 15px;
+}
+
+table {
+  /* Set "my-sec-counter" to 0 */
+  counter-reset: my-sec-counter;
+}
+
+p::before {
+  /* Increment "my-sec-counter" by 1 */
+  counter-increment: my-sec-counter;
+  content: counter(my-sec-counter) ". ";
+  font-size:18px;
+}
+
+</style>
+
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+<div class="container mt-4">
+
+{% if logado %}
+{% elif user.is_authenticated %}
+{% include 'partials/_lista.html' %}
+{% else %}
+{% include 'partials/_filter.html' %}
+{% endif %}
+{% include 'partials/_filter_bolsa.html' %}
+</div>
+
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 15%" scope="col">Financiador</th>
+            <th style="width: 15%" scope="col">Bolsa</th>
+            <th style="width: 5%" scope="col">Quantidade</th>
+            <th style="width: 10%" scope="col">Portaria</th>
+            <th style="width: 50%" scope="col" class="text-center">Periodo</th>
+          </tr>
+        </thead>
+        <tbody>
+         {% if bolsas %}
+            {% for bolsa in bolsas %}
+          <tr>
+            <th scope="row"><p></p></th>
+            <td>{{ bolsa.orgao_remunerador }}</td>
+            <td>{{ bolsa.tipo_bolsa }}</td>
+              {% with bolsa.bolsistas.all as bolsistas %}
+                {% for bolsista in bolsistas %}
+                {% if forloop.last %}
+                <td>{{forloop.counter}}</td>
+                {% endif %}
+              {% endfor %}
+              {% endwith %}
+            <td>{{ bolsa.portaria_bolsa }}</td>
+            <td class="text-center" rowspan="1">{{ bolsa.data_de_inicio }} -- {{ bolsa.data_de_fim }}</td>
+          </tr>
+
+        {% endfor %}
+        {% else %}
+
+            <h1 class="text-center">Ainda não há bolsas cadastradas</h1>
+
+        {% endif %}
+
+        </tbody>
+      </table>
+
+    {% include 'partials/_pagination_proj.html' %}
+
+
+    </div>
+
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

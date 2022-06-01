@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+{% include 'partials/_adm.html' %}
+
+<br><br><br>
+<div class="d-flex justify-content-center">
+    <div class="row">
+        <div div class="col-12 col-lg-10">
+            <h3>Nome: {{form.first_name.value}}</h3>
+        </div>
+        <br>
+        <div div class="col-12 col-lg-10">
+            <h3>Sobrenome: {{form.last_name.value}}</h3>
+        </div>
+        <br>
+        <div div class="col-12 col-lg-10">
+            <h3>Email: {{form.email.value}}</h3>
+        </div>
+    </div>
+</div>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

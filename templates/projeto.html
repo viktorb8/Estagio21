@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+<style>
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+</style>
+
+<script>
+  var x = 1;
+</script>
+
+<!-- Begin page content -->
+<main role="main">
+  <div class="container mt-4">
+
+    <div class="d-flex bd-highlight mb-3">
+
+      {%if user.is_authenticated %}
+        {% if not logado %}
+        <div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-green" href="{% url 'editar_projeto' projeto.id %}">Editar</a>
+        </div>
+        {% endif %}
+        <div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-green" href="{% url 'relatorios' projeto.id %}">Relatórios</a>
+        </div>
+
+        {% if not logado %}
+        <div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-green" href="{% url 'bolsas' projeto.id %}">Bolsas</a>
+        </div>
+
+        <div class="p-2 bd-highlight">
+          <a role="button" class="btn btn-danger" href="{% url 'deletar_projeto' projeto.id %}">Excluir</a>
+        </div>
+        {% endif %}
+
+
+      {% endif %}
+
+        <div class="ml-auto p-2 bd-highlight">
+          <a role="button" class="btn btn-green" href="{% url 'pdf_view' projeto.id %}" target="_blank">Gerar PDF</a>
+        </div>
+
+    </div>
+
+
+    <div class="table-responsive">
+      <table class="table">
+
+    <tbody>
+
+      <tr class="d-flex flex-column mb-3">
+        <th>Nome do Projeto:</th>
+        <td><a>{{projeto.nome_projeto}}</a></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Portaria do projeto:</th>
+        <td><a>{{projeto.portaria_projeto}}</a></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Data de Inicio:</th>
+        <td><a>{{projeto.data_de_inicio}}</a></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Data de Término:</th>
+        <td><a>{{projeto.data_de_fim}}</a></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Objetivo do Projeto:</th>
+        <td><p class="text-justify">{{projeto.objetivo_projeto}}</p></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Área do Projeto:</th>
+        <td><a>{{projeto.area_projeto}}</a></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Coordenador do Projeto:</th>
+        <td><a>{{projeto.coordenador_projeto}}</a></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">E-mail do Coordenador:</th>
+        <td><a>{{projeto.coordenador_projeto.email}}</a></td>
+      </tr>
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Url do Projeto:</th>
+        <td><a href="{{projeto.url_projeto}}" target="_blank">{{projeto.url_projeto}}</a></td>
+      </tr>
+
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Tipos de Ações:</th>
+        <td><a>{{projeto.tipos_de_acoes}}</a></td>
+      </tr>
+
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Colaboradores do Projeto:</th>
+        {% if projeto.colaboradores.all %}
+        <td>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Lattes</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for colab in projeto.colaboradores.all %}
+              <tr>
+                <td>{{colab.colaborador_projeto}}</td>
+                <td>{{colab.lattes}}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </td>
+        {% else %}
+        <td><a>Não há colaboradores cadastrados!</a></td>
+        {% endif %}
+      </tr>
+
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Financiador do projeto:</th>
+        {% if projeto.financiador %}
+        <td>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Financiador</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Edital</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{projeto.financiador}}</td>
+                <td>{{projeto.valor_financiado}}</td>
+                <td>{{projeto.edital_financiado}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        {% else %}
+        <td><a>Não há financiador!</a></td>
+        {% endif %}
+      </tr>
+
+      <tr class="d-flex flex-column mb-2">
+        <th scope="row">Relatórios do Projeto:{%if user.is_authenticated %}  <a role="button" class="btn btn-green" href="{% url 'relatorios' projeto.id %}">Cadastrar</a>
+          {% endif %}
+        </th>
+        {% if projeto.relatorio.all %}
+        <td>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Relatório</th>
+                <th scope="col">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for relatorio in projeto.relatorio.all %}
+              <tr>
+                <td>{{relatorio.relatorio}}</td>
+                <td><a href="{{relatorio.relatorio.url}}" class="btn btn-primary">Download</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </td>
+        {% else %}
+        <td><a>Sem relatório disponível!</a></td>
+        {% endif %}
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+
+  </div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

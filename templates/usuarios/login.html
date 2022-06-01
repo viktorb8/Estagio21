@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+<style>
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+.btn-xl {
+    width: 20%;
+}
+
+</style>
+
+<main role="main">
+    <div class="container">
+<!-- ##### Contact Form Area Start ##### -->
+        <div class="contact-area section-padding-0-80">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading">
+                            <h2>Login</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-form-area">
+                            <form action="{% url 'login' %}" method="POST">
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{ form.email.label }}
+                                        {{ form.email }}
+                                    </div>
+                                    {% for error in form.email.errors %}
+                                        <section class="alert alert-danger col-12" role="alert">
+                                            {{ form.email.errors }}
+                                        </section>
+                                    {% endfor %}
+
+                                    <div class="col-12">
+                                        {{ form.senha.label }}
+                                        {{ form.senha }}
+                                    </div>
+                                    {% for error in form.senha.errors %}
+                                        <section class="alert alert-danger col-12" role="alert">
+                                            {{ form.senha.errors }}
+                                        </section>
+                                    {% endfor %}
+
+
+                                </div>
+
+                                <div class="d-flex p-2 bd-highlight">
+                                    <div class="col-12 text-center">
+                                        <button class="btn btn-green btn-xl" type="submit">Acessar sua conta</button>
+                                        <a role="button" href="recuperar_senha" class="btn btn-primary btn-xl">Esqueci a senha</a>
+                                        {% csrf_token %}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+function exibirCriarConta()
+{
+     location.href = "{% url 'cadastro' %}";
+}
+</script>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

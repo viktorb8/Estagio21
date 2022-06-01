@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+.btn-ico{
+background-color:#008000;
+padding: 2px 5px;
+margin-bottom: 10;
+}
+
+textarea {
+  height: 100px;
+}
+
+</style>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<main role="main">
+    <div class="container">
+        <div class="contact-area">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading">
+                            <h2>Cadastrar Professor</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-form-area">
+                            <form action="{% url 'cadastrar_professor' %}" method="POST">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-lg-6">
+                                        {{prof_form.nome_professor.label_tag}}
+                                        {{prof_form.nome_professor}}
+                                    </div>
+
+                                    <div class="col-12 col-lg-6">
+                                        {{prof_form.sobrenome_professor.label_tag}}
+                                        {{prof_form.sobrenome_professor}}
+                                    </div>
+
+                                    <div class="col-12 col-lg-12">
+                                        {{ prof_form.email.label_tag }}
+                                        {{ prof_form.email}}
+                                    </div>
+
+                                    {% for error in prof_form.email.errors %}
+                                    <section class="alert alert-danger col-12" role="alert">
+                                        {{ prof_form.email.errors }}
+                                    </section>
+                                    {% endfor %}
+
+                                    <div class="col-12 col-lg-6">
+                                        {{ prof_form.senha.label_tag }}
+                                        {{ prof_form.senha}}
+                                    </div>
+
+                                    <div class="col-12 col-lg-6">
+                                        <label for="senha2">Confirmação de senha: </label>
+                                        <input type="password" class="form-control" id="senha2" name="senha2" placeholder="Confirme a senha" required>
+                                    </div>
+                                    {% for error in prof_form.senha.errors %}
+                                    <section class="alert alert-danger col-12 col-lg-12 " role="alert">
+                                        {{ prof_form.senha.errors }}
+                                    </section>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-flex p-2 bd-highlight">
+                                    <div class="col-12 text-center">
+                                        <button class="btn btn-green" type="submit">Criar sua conta</button>
+                                        {% csrf_token %}
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% endblock %}

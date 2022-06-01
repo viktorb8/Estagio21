@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/_header.html' %}
+
+
+<style>
+a:link, a:visited{
+  color: #006600;
+}
+
+.btn-green{
+background-color:#008000
+;color: #FFF;
+}
+
+.btn-green:hover{
+color:#fff;
+background-color: #009900;
+border-color: #008000;
+}
+
+textarea {
+  height: 100px;
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- Begin page content -->
+
+<main role="main">
+	<div class="container mt-4">
+
+		<div class="d-flex bd-highlight mb-3">
+
+			<div class="p-2 bd-highlight">
+			  <a role="button" class="btn btn-green text-white" href="{% url 'projeto' id %}">Projeto</a>
+			</div>
+
+    	</div>
+
+		<form enctype="multipart/form-data" action="" class="form-group" method="POST">{% csrf_token %}
+
+			<div style="display: none;">
+				{{form.as_p}}
+			</div>
+
+			<hr class="col-xs-12">
+			<div class="form-group">
+				{{ form_relatorio.management_form }}
+					{% for arquivo in form_relatorio %}
+						{{ arquivo.non_field_errors }}
+						{{ arquivo.errors }}
+						 {% for hidden in arquivo.hidden_fields %}
+							{{ hidden }}
+						{% endfor %}
+
+			  		<div class="container inline-form relatorio">
+
+						{{arquivo.relatorio.label_tag}}
+
+
+
+						<div class="input-group mb-3">
+							{% if arquivo.relatorio.value is not None %}
+								{{arquivo.relatorio.value}}
+							{% else %}
+								{{arquivo.relatorio}}
+							{% endif %}
+							<div class="input-group-append col-4">
+								{% if arquivo.relatorio.value is not None%}
+									<a type="button" href="{{arquivo.relatorio.value.url}}" class="text-white btn-primary button btn-lg fas fa-file-download"></a>
+									<a type="button" href="/projeto/{{arquivo.relatorio.value}}/{{id}}/deletar_relatorio" class="text-white button btn-danger btn-lg fas fa-window-close"></a>
+								{% else %}
+									<a href="javascript:void(0)" class="text-white button btn-danger btn-lg fas fa-minus-square"></a>
+								{% endif %}
+							</div>
+						</div>
+
+					<hr class="col-xs-12">
+					</div>
+					{% endfor %}
+		    </div>
+
+			<br>
+			<div class="submit-row">
+				<button type="submit" class="btn btn-green" name="_save">Salvar</button>
+			</div>
+
+		</form>
+	</div>
+</main>
+
+{% include 'partials/_footer.html' %}
+
+{% block scripts %}
+		<script type="text/javascript">
+
+			$(function() {
+				$('.relatorio').formset({
+					prefix: '{{ form_relatorio.prefix }}',
+					addCssClass: 'text-white button btn-lg btn-green',
+					deleteCssClass: 'text-white button btn-danger btn-lg fas fa-minus-square',
+					addText: '+ Relatorio',
+					deleteText: '',
+				});
+			})
+
+		</script>
+{% endblock scripts %}
+
+{% endblock %}
+
