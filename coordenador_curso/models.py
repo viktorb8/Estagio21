@@ -7,9 +7,7 @@ class MyAppConfig(AppConfig):
     default_auto_field = 'django.db.models.AutoField'
     name = 'my_app'
 
-
 class Projeto(models.Model):
-    id = models.AutoField(primary_key=True)
 
     acoes = (
         ('', "---------"),
@@ -49,13 +47,11 @@ class Projeto(models.Model):
 
 
 class Relatorios(models.Model):
-    id = models.AutoField(primary_key=True)
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE, related_name='relatorio')
     relatorio = models.FileField('Relatório', blank=True)
 
 
 class Colaboradores(models.Model):
-    id = models.AutoField(primary_key=True)
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE, related_name='colaboradores')
     colaborador_projeto = models.CharField(max_length=200, blank=True)
     lattes = models.CharField(max_length=200, blank=True)
@@ -65,7 +61,6 @@ class Colaboradores(models.Model):
 
 
 class Bolsas(models.Model):
-    id = models.AutoField(primary_key=True)
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE, related_name='bolsas')
     orgao_remunerador = models.CharField(max_length=50, blank=True)
     tipo_bolsa = models.CharField('Tipo de bolsa', max_length=50, blank=True, null=True)
@@ -78,7 +73,6 @@ class Bolsas(models.Model):
 
 
 class Bolsistas(models.Model):
-    id = models.AutoField(primary_key=True)
     bolsa = models.ForeignKey(Bolsas, on_delete=models.CASCADE, related_name='bolsistas')
     bolsista = models.CharField('Nome', max_length=200, blank=True)
     email = models.EmailField(max_length=200, blank=True)
