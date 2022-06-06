@@ -1,9 +1,4 @@
 from django.db import models
-from django.apps import AppConfig
-
-class MyAppConfig(AppConfig):
-    default_auto_field = 'django.db.models.AutoField'
-    name = 'my_app'
 
 class Professores(models.Model):
     nome_professor = models.CharField(max_length=200)
