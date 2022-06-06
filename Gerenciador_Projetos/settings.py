@@ -150,4 +150,6 @@ EMAIL_HOST_PASSWORD = 'sistema2020'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
+DISABLE_COLLECTSTATIC=1
+
 django_on_heroku.settings(locals())
