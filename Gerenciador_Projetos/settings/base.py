@@ -148,4 +148,4 @@ EMAIL_HOST_USER = 'sistema.unemat.2020@gmail.com'
 EMAIL_HOST_PASSWORD = 'sistema2020'
 
 django_on_heroku.settings(locals())
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
