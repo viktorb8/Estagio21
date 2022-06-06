@@ -1,6 +1,11 @@
 from django.db import models
 
 from professores.models import Professores
+from django.apps import AppConfig
+
+class MyAppConfig(AppConfig):
+    default_auto_field = 'django.db.models.AutoField'
+    name = 'my_app'
 
 
 class Projeto(models.Model):

@@ -1,4 +1,9 @@
 from django.db import models
+from django.apps import AppConfig
+
+class MyAppConfig(AppConfig):
+    default_auto_field = 'django.db.models.AutoField'
+    name = 'my_app'
 
 class Professores(models.Model):
     id = models.AutoField(primary_key=True)
