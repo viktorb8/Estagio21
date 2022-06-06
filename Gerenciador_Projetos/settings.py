@@ -147,6 +147,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sistema.unemat.2020@gmail.com'
 EMAIL_HOST_PASSWORD = 'sistema2020'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
 django_on_heroku.settings(locals())
