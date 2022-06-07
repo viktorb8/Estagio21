@@ -27,28 +27,7 @@ border-color: #008000;
 
     <div class="d-flex bd-highlight mb-3">
 
-      {%if user.is_authenticated %}
-        {% if not logado %}
-        <div class="p-2 bd-highlight">
-          <a role="button" class="btn btn-green" href="{% url 'editar_projeto' projeto.id %}">Editar</a>
-        </div>
-        {% endif %}
-        <div class="p-2 bd-highlight">
-          <a role="button" class="btn btn-green" href="{% url 'relatorios' projeto.id %}">Relatórios</a>
-        </div>
 
-        {% if not logado %}
-        <div class="p-2 bd-highlight">
-          <a role="button" class="btn btn-green" href="{% url 'bolsas' projeto.id %}">Bolsas</a>
-        </div>
-
-        <div class="p-2 bd-highlight">
-          <a role="button" class="btn btn-danger" href="{% url 'deletar_projeto' projeto.id %}">Excluir</a>
-        </div>
-        {% endif %}
-
-
-      {% endif %}
 
         <div class="ml-auto p-2 bd-highlight">
           <a role="button" class="btn btn-green" href="{% url 'pdf_view' projeto.id %}" target="_blank">Gerar PDF</a>
