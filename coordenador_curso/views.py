@@ -463,6 +463,8 @@ def projeto(request, projeto_id):
         bolsista = Bolsistas.objects.filter(email=email).exists()
         if bolsista:
             logado = True
+        else:
+            logado = False
     else:
         logado = False
 
